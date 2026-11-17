@@ -1,0 +1,14 @@
+{% extends "base.html.twig" %}
+{% block title %}
+Détail de l'utilisateur
+{% endblock %}
+{% block body %}
+<section>
+    <h1>Détail de l'utilisateur</h1>
+    <article>
+        id: <strong>{{ user.id }}</strong> - Firstname & Lastname : <strong>{{ user.firstname }} {{ user.lastname }}</strong>
+        email : <strong>{{ user.email }}</strong>
+    </article>
+    <a href="{{ path('app_profile') }}">Retour à la liste</a>
+</section>
+{% endblock %}

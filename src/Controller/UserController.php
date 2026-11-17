@@ -22,4 +22,18 @@ class UserController extends AbstractController
         'users' => $users
     ]);
 }
+
+    #[Route(path:'/users/{id}', name:'app_profile_id')]
+    public function showUserById(int $id): Response
+    {
+        $user = $this->userService->getUserById($id);
+
+        if (!$user) {
+            throw $this->createNotFoundException('Profile non trouvé pour l\'ID : ' . $id);
+        }
+
+        return $this->render('user/show_user_id.html.twig', [
+            'user' => $user
+        ]);
+    }
 }

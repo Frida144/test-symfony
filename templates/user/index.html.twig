@@ -8,7 +8,8 @@ Liste des utilisateurs
     <h1>Liste des utilisateurs</h1>
         {# boucler sur la liste des utilisateurs #}
         {% for user in users %}
-            <article>Fristname & Lastname: <strong>{{ user.firstname }} {{ user.lastname }} </strong> email: <strong>{{ user.email }}</strong></article>
+            <article>id: <strong>{{ user.id }}</strong> - Fristname & Lastname: <strong>{{ user.firstname }} {{ user.lastname }} </strong> email: <strong>{{ user.email }}</strong></article>
+            <a href="{{ path('app_profile_id', {id: user.id}) }}">Voir les détails</a>
         {% endfor %}
     {% else %}
     <h2>La liste est vide</h2>
