@@ -1,7 +1,17 @@
 {% extends "base.html.twig" %}
-
+{% block title %}
+Liste des utilisateurs
+{% endblock %}
 {% block body %}
-    <h1>Bonjour {{ name }}</h1>
-    <h3>Âge : {{ age }} ans</h3>
-    <h3>Ville : {{ city }}</h3>
-{% endblock body %}
+<section>
+    {% if users %}
+    <h1>Liste des utilisateurs</h1>
+        {# boucler sur la liste des utilisateurs #}
+        {% for user in users %}
+            <article>Fristname & Lastname: <strong>{{ user.firstname }} {{ user.lastname }} </strong> email: <strong>{{ user.email }}</strong></article>
+        {% endfor %}
+    {% else %}
+    <h2>La liste est vide</h2>
+    {% endif %}
+</section>  
+{% endblock %}

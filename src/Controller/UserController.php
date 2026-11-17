@@ -5,19 +5,21 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use App\Service\UserService;
 
 class UserController extends AbstractController
 {
-    #[Route(path:'/profil/{name}', name:'app_profile', defaults: ['name' => 'inconnu'])]
-    public function profile(string $name): Response
+    public function __construct(
+        private UserService $userService
+    ) {}
+
+    #[Route(path:'/profil', name:'app_profile')]
+    public function profile(): Response
 {
-    $name = "alice";
-    $age = 47;
-    $city = "Toulouse";
+    $users = $this->userService->getUsers();
+
     return $this->render('user/index.html.twig', [
-        'name' => $name,
-        'age' => $age,
-        'city' => $city
+        'users' => $users
     ]);
 }
 }
