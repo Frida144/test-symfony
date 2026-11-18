@@ -1,12 +1,12 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    <h1>Détail du livre</h1>
-    <h2>{{ book.title }}</h2>
-    <p>Auteur : {{ book.author }}</p>
-    <p>
-        <a href="{{ path('app_books') }}">
-            Retour à la liste
-        </a>
-    </p>
+    <h1 class="page-title">Détail du livre</h1>
+    <article class="card">
+        <h2 class="mb-3 text-2xl font-bold text-violet-700">{{ book.title }}</h2>
+        <p class="mb-6 inline-block rounded-full bg-pink-100 px-3 py-1 text-sm font-semibold text-pink-600">✍️ Auteur : {{ book.author }}</p>
+        <p>
+            <a href="{{ path('app_books') }}" class="btn-light"> 🔙 Retour à la liste </a>
+        </p>
+    </article>
 {% endblock body %}

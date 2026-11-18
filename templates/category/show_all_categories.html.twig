@@ -5,13 +5,17 @@ Liste des categories
 {% block body %}
 <section>
     {% if categories %}
-    <h1>Liste des categories</h1>
+    <h1 class="page-title">🏷️ Liste des categories</h1>
+        <div class="flex flex-wrap gap-3">
         {# boucler sur la liste des categories #}
         {% for category in categories %}
-            <article>{{ category.id }}</article>
+            <article class="rounded-full bg-white px-5 py-2 font-semibold text-violet-600 shadow ring-1 ring-violet-200 transition hover:-translate-y-0.5">
+                #{{ category.id }} {{ category.name }}
+            </article>
         {% endfor %}
+        </div>
     {% else %}
-    <h2>La liste est vide</h2>
+    <h2 class="empty">La liste est vide 😢</h2>
     {% endif %}
-</section>  
+</section>
 {% endblock %}

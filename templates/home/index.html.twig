@@ -1,4 +1,11 @@
 {% extends "base.html.twig" %}
 {% block body %}
-<h1>Bienvenue sur mon application Symfony</h1>
+<section class="card py-16 text-center">
+    <h1 class="page-title mb-4">Bienvenue sur mon application Symfony</h1>
+    <p class="mb-8 text-lg text-slate-500">Explore les livres, les utilisateurs et les catégories 🎉</p>
+    <div class="flex flex-wrap justify-center gap-3">
+        <a href="{{ path('app_books') }}" class="btn">📚 Voir les livres</a>
+        <a href="{{ path('app_profile') }}" class="btn-light">👤 Voir les utilisateurs</a>
+    </div>
+</section>
 {% endblock %}

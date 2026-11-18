@@ -5,14 +5,25 @@ Liste des utilisateurs
 {% block body %}
 <section>
     {% if users %}
-    <h1>Liste des utilisateurs</h1>
+    <h1 class="page-title">👤 Liste des utilisateurs</h1>
+        <div class="grid gap-6 sm:grid-cols-2">
         {# boucler sur la liste des utilisateurs #}
         {% for user in users %}
-            <article>id: <strong>{{ user.id }}</strong> - Fristname & Lastname: <strong>{{ user.firstname }} {{ user.lastname }} </strong> email: <strong>{{ user.email }}</strong></article>
-            <a href="{{ path('app_profile_id', {id: user.id}) }}">Voir les détails</a>
+            <article class="card flex items-center gap-4">
+                <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-pink-400 to-violet-500 text-lg font-bold text-white">
+                    {{ user.firstname|first }}{{ user.lastname|first }}
+                </div>
+                <div class="min-w-0 flex-1">
+                    <p class="font-bold text-violet-700">{{ user.firstname }} {{ user.lastname }}</p>
+                    <p class="truncate text-sm text-slate-500">{{ user.email }}</p>
+                    <p class="text-xs text-slate-400">id : {{ user.id }}</p>
+                </div>
+                <a href="{{ path('app_profile_id', {id: user.id}) }}" class="btn">Détails</a>
+            </article>
         {% endfor %}
+        </div>
     {% else %}
-    <h2>La liste est vide</h2>
+    <h2 class="empty">La liste est vide 😢</h2>
     {% endif %}
-</section>  
+</section>
 {% endblock %}

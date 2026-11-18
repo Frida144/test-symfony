@@ -1,6 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Calculatrice</h1>
-    <p>L'opération {{ operation }} entre {{ number1 }} et {{ number2 }} donne {{ result }}</p>
+    <h1 class="page-title">🧮 Calculatrice</h1>
+    <div class="card text-center text-lg">
+        <p>L'opération <span class="font-bold text-violet-600">{{ operation }}</span> entre <span class="font-bold">{{ number1 }}</span> et <span class="font-bold">{{ number2 }}</span> donne</p>
+        <p class="mt-4 text-5xl font-extrabold text-pink-500">{{ result }}</p>
+    </div>
 {% endblock %}

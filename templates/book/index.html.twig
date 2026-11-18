@@ -1,15 +1,16 @@
 {% extends "base.html.twig" %}
 
 {% block body %}
-    <h1>Liste des livres</h1>
-    <ul>
+    <h1 class="page-title">📚 Liste des livres</h1>
+    <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {% for book in books %}
-    <li>
-        <strong>{{ book.title }}</strong> - {{ book.author }} -
-        <a href="{{ path('app_book_show', {id: book.id}) }}">Voir le détail</a>
-    </li>
-{% else %}
-    <li>Aucun livre disponible</li>
-{% endfor %}
+            <li class="card flex flex-col">
+                <h2 class="mb-2 text-lg font-bold text-violet-700">{{ book.title }}</h2>
+                <p class="mb-4 flex-1 text-sm text-slate-500">✍️ {{ book.author }}</p>
+                <a href="{{ path('app_book_show', {id: book.id}) }}" class="btn self-start">Voir le détail →</a>
+            </li>
+        {% else %}
+            <li class="empty sm:col-span-2 lg:col-span-3">Aucun livre disponible 😢</li>
+        {% endfor %}
     </ul>
 {% endblock body %}

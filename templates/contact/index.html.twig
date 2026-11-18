@@ -1,5 +1,8 @@
 {% extends "base.html.twig" %}
 {% block body %}
-    <p>Email : test@test.com</p>
-    <h2>Teléphone : 06.00.01.02.03</h2>
+    <h1 class="page-title">✉️ Contact</h1>
+    <div class="card space-y-3">
+        <p class="text-lg">📧 Email : <a href="mailto:test@test.com" class="font-semibold text-violet-600 hover:underline">test@test.com</a></p>
+        <h2 class="text-lg">📞 Téléphone : <span class="font-semibold text-pink-600">06.00.01.02.03</span></h2>
+    </div>
 {% endblock body %}
