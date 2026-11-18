@@ -19,8 +19,17 @@ class CategoryController extends AbstractController
         //Récupération de toutes les catégories de la BDD
         $categories = $this->categoryService->getCategories();
 
+        $categoryData = [];
+        foreach ($categories as $category) {
+            $categoryData[] = [
+                'id' => $category->getId(),
+                'name' => $category->getName()
+            ];
+        }
+
         return $this->render('category/show_all_categories.html.twig',[
-            'categories' => $categories
+            'categories' => $categories,
+            'categoryData' => $categoryData
         ]);
     }
 }

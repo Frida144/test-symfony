@@ -6,14 +6,12 @@ Liste des categories
 <section>
     {% if categories %}
     <h1 class="page-title">🏷️ Liste des categories</h1>
-        <div class="flex flex-wrap gap-3">
+    <div class="flex flex-wrap gap-3">
         {# boucler sur la liste des categories #}
         {% for category in categories %}
-            <article class="rounded-full bg-white px-5 py-2 font-semibold text-violet-600 shadow ring-1 ring-violet-200 transition hover:-translate-y-0.5">
-                #{{ category.id }} {{ category.name }}
-            </article>
+        <twig:CategoryCard id="{{ category.id }}" name="{{ category.name }}" />
         {% endfor %}
-        </div>
+    </div>
     {% else %}
     <h2 class="empty">La liste est vide 😢</h2>
     {% endif %}
