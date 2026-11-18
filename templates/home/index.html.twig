@@ -7,5 +7,13 @@
         <a href="{{ path('app_books') }}" class="btn">📚 Voir les livres</a>
         <a href="{{ path('app_profile') }}" class="btn-light">👤 Voir les utilisateurs</a>
     </div>
+    <div class="mt-10 grid gap-6 sm:grid-cols-2">
+        {% for formation in formations %}
+            <twig:FormationCard title="{{ formation.title }}" description="{{ formation.description }}" />
+        {% else %}
+            <p class="empty sm:col-span-2">Aucune formation disponible 😢</p>
+        {% endfor %}
+
+    </div>
 </section>
 {% endblock %}
