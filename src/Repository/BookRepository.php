@@ -61,4 +61,35 @@ class BookRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
+
+    public function findByCategory(string $categoryName): array
+    {
+        return $this->createQueryBuilder('b')
+            ->innerJoin('b.category', 'c')
+            ->where('c.name = :categoryName')
+            ->setParameter('category', $categoryName)
+            ->orderBy('b.id')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function findByFilters(?int $categoryId, ?\DateTimeImmutable $publishedAfter): array
+    {
+        $qb = $this->createQueryBuilder('b')
+            ->orderBy('b.publishAt', 'DESC');
+
+        if ($categoryId !== null) {
+            $qb->innerJoin('b.categories', 'c')
+                ->andWhere('c.id = :categoryId')
+                ->setParameter('categoryId', $categoryId);
+        }
+
+        if ($publishedAfter !== null) {
+            $qb->andWhere('b.publishAt >= :date')
+                ->setParameter('date', $publishedAfter);
+        }
+
+        return $qb->getQuery()->getResult();
+    }
 }

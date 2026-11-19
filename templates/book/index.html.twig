@@ -7,13 +7,47 @@
         class="flex-1 rounded-full bg-white px-5 py-2 shadow ring-1 ring-violet-200 focus:outline-none focus:ring-2 focus:ring-violet-400">
     <button class="btn">Rechercher</button>
 </form>
+
 <h1 class="page-title">📚 Liste des livres</h1>
+
+{% set categories = categories|default([]) %}
+{% set selectedCategory = selectedCategory|default('') %}
+{% set selectedDate = selectedDate|default('') %}
+<form method="get" action="{{ path('app_books') }}" class="card mb-8 flex flex-wrap items-end gap-4">
+    <label class="flex flex-col gap-1 text-sm font-semibold text-violet-700">
+        🏷️ Catégorie
+        <select name="category" class="rounded-full bg-white px-4 py-2 font-normal text-slate-700 ring-1 ring-violet-200 focus:outline-none focus:ring-2 focus:ring-violet-400">
+            <option value="">Toutes</option>
+            {% for category in categories %}
+                <option value="{{ category.id }}" {{ selectedCategory == category.id ? 'selected' }}>{{ category.name }}</option>
+            {% endfor %}
+        </select>
+    </label>
+
+    <label class="flex flex-col gap-1 text-sm font-semibold text-violet-700">
+        📅 Publié après le
+        <input type="date" name="date" value="{{ selectedDate }}"
+            class="rounded-full bg-white px-4 py-2 font-normal text-slate-700 ring-1 ring-violet-200 focus:outline-none focus:ring-2 focus:ring-violet-400">
+    </label>
+
+    <button class="btn">Filtrer</button>
+    {% if selectedCategory or selectedDate %}
+        <a href="{{ path('app_books') }}" class="btn-light">✖ Réinitialiser</a>
+    {% endif %}
+    <p class="ml-auto text-sm text-slate-500">{{ books|length }} livre(s)</p>
+</form>
+
 <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
     {% for book in books %}
     <li class="card flex flex-col">
         <h2 class="mb-2 text-lg font-bold text-violet-700">{{ book.title }}</h2>
-        <p class="mb-4 flex-1 text-sm text-slate-500">✍️ {{ book.author }}</p>
-        <p class="text-xs text-slate-400">📅 {{ book.publishAt|date('d/m/Y') }}</p>
+        <p class="mb-2 flex-1 text-sm text-slate-500">✍️ {{ book.author }}</p>
+        <p class="mb-2 text-xs text-slate-400">📅 {{ book.publishAt|date('d/m/Y') }}</p>
+        <div class="mb-4 flex flex-wrap gap-1">
+            {% for category in book.categories %}
+                <span class="rounded-full bg-violet-100 px-2 py-0.5 text-xs text-violet-600">{{ category.name }}</span>
+            {% endfor %}
+        </div>
         <a href="{{ path('app_book_show', {id: book.id}) }}" class="btn self-start">Voir le détail →</a>
     </li>
     {% else %}

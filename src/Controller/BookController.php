@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Service\BookService;
+use App\Service\CategoryService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -15,10 +16,16 @@ class BookController extends AbstractController
     )  {}
 
     #[Route(path: '/books', name: 'app_books')]
-    public function index(): Response
-    {
+    public function index(
+        CategoryService $categoryService,
+        #[MapQueryParameter] string $category = '',
+        #[MapQueryParameter] string $date = '',
+    ): Response {
         return $this->render('book/index.html.twig', [
-            'books' => $this->bookService->getBooks(),
+            'books' => $this->bookService->getBooksByFilters($category, $date),
+            'categories' => $categoryService->getCategories(),
+            'selectedCategory' => $category,
+            'selectedDate' => $date,
         ]);
     }
 
@@ -53,6 +60,16 @@ class BookController extends AbstractController
         
         return $this->render('book/index.html.twig', [
             'books' => $books
+        ]);
+    }
+
+    #[Route(path: '/books/category/{categoryName}', name: 'app_book_category')]
+    public function findByCategory(string $categoryName): Response
+    {
+        $books = $this->bookService->getBooksByCategoryName($categoryName);
+
+        return $this->render('book/index.html.twig', [
+            'books' => $books,
         ]);
     }
 }

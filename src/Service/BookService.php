@@ -36,4 +36,18 @@ class BookService
                 new \DateTimeImmutable($date)
             );
     }
+
+    public function getBooksByCategoryName(string $categoryName): array
+    {
+    return $this->bookRepository->findByCategory($categoryName);
+    }
+
+    public function getBooksByFilters(string $categoryId, string $date): array
+    {
+        $category = ctype_digit($categoryId) ? (int) $categoryId : null;
+        $publishedAfter = \DateTimeImmutable::createFromFormat('!Y-m-d', $date) ?: null;
+
+        return $this->bookRepository->findByFilters($category, $publishedAfter);
+    }
+
 }

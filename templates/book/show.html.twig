@@ -5,6 +5,14 @@
     <article class="card">
         <h2 class="mb-3 text-2xl font-bold text-violet-700">{{ book.title }}</h2>
         <p class="mb-6 inline-block rounded-full bg-pink-100 px-3 py-1 text-sm font-semibold text-pink-600">✍️ Auteur : {{ book.author }}</p>
+        <p class="mb-2 text-xs text-slate-400">📅 {{ book.publishAt|date('d/m/Y') }}</p>
+        <div class="mb-4 flex flex-wrap gap-3">
+               <p class="mb-6 inline-block rounded-full bg-pink-100 px-3 py-1 text-sm font-semibold text-pink-600">✍️ Categorie </p>
+            {% for category in book.categories %}
+                <p href="{{ path('app_book_category', {categoryName: category.name}) }}"
+                   class=" px-2 py-0.5 text-xs text-violet-600 ">{{ category.name }}</p>
+            {% endfor %}
+        </div>
         <p>
             <a href="{{ path('app_books') }}" class="btn-light"> 🔙 Retour à la liste </a>
         </p>
