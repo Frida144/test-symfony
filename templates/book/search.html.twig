@@ -2,12 +2,6 @@
 
 {% block body %}
 <h1 class="page-title">🔎 Résultats pour « {{ title }} »</h1>
-
-<form method="get" action="{{ path('app_book_search') }}" class="mb-8 flex gap-3">
-    <input type="text" name="title" value="{{ title }}" placeholder="Titre du livre…"
-        class="flex-1 rounded-full bg-white px-5 py-2 shadow ring-1 ring-violet-200 focus:outline-none focus:ring-2 focus:ring-violet-400">
-    <button class="btn">Rechercher</button>
-</form>
 <ul class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
     {% for book in books %}
     <li class="card flex flex-col">

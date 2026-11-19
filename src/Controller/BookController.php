@@ -14,14 +14,15 @@ class BookController extends AbstractController
         private BookService $bookService
     )  {}
 
-    #[Route('/livres', name: 'app_books')]
+    #[Route(path: '/books', name: 'app_books')]
     public function index(): Response
     {
         return $this->render('book/index.html.twig', [
             'books' => $this->bookService->getBooks(),
         ]);
     }
-    #[Route('/livre/{id}', name: 'app_book_show', requirements: ['id' => '\d+'])]
+
+    #[Route('/books/{id}', name: 'app_book_show', requirements: ['id' => '\d+'])]
     public function show(int $id): Response
     {
         $book = $this->bookService->getBookById($id);
@@ -42,6 +43,16 @@ class BookController extends AbstractController
         return $this->render('book/search.html.twig', [
             'books' => $books,
             'title' => $title,
+        ]);
+    }
+
+    #[Route(path: '/books/recent/{date}', name: 'app_book_recent', requirements: ['date' => '\d{4}-\d{2}-\d{2}'])]
+    public function showBooksByAfterPublishAt(string $date): Response 
+    {
+        $books = $this->bookService->getBooksByAfterPublishAt($date);
+        
+        return $this->render('book/index.html.twig', [
+            'books' => $books
         ]);
     }
 }

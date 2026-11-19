@@ -23,4 +23,17 @@ class BookService
     return $this->bookRepository->findByTitle($title);
     }
 
+      public function getBooksByTitle(string $title): array
+    {
+        return $this->bookRepository->findByTitle($title);
+    }
+
+    public function getBooksByAfterPublishAt(string $date): array
+    {
+        return $this
+            ->bookRepository
+            ->findPublishedAfter(
+                new \DateTimeImmutable($date)
+            );
+    }
 }
