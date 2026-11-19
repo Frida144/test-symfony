@@ -40,4 +40,13 @@ class BookRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+    public function findByTitle(string $title): array 
+    {
+        return $this->createQueryBuilder('b')
+           ->where('b.title LIKE :title')
+           ->setParameter('title', '%'.$title.'%')
+           ->orderBy('b.title', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
 }

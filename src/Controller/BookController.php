@@ -6,6 +6,7 @@ use App\Service\BookService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 
 class BookController extends AbstractController
 {
@@ -29,6 +30,18 @@ class BookController extends AbstractController
         }
         return $this->render('book/show.html.twig', [
             'book' => $book,
+        ]);
+    }
+
+    #[Route('/books/search', name: 'app_book_search', methods: ['GET'])]
+    public function search(#[MapQueryParameter] string $title = ''): Response
+    {
+
+     $books = $this->bookService->searchByTitle($title);
+
+        return $this->render('book/search.html.twig', [
+            'books' => $books,
+            'title' => $title,
         ]);
     }
 }

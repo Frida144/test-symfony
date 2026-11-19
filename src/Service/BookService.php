@@ -15,8 +15,12 @@ class BookService
         return $this->bookRepository->findAll() ?? [];
     }
     public function getBookById(int $id): ?Book
-{
+    {
     return $this->bookRepository->find($id);
-}
+    }
+    public function searchByTitle(string $title): array
+    {
+    return $this->bookRepository->findByTitle($title);
+    }
 
 }
