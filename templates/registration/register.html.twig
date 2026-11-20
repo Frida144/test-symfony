@@ -1,0 +1,66 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block body %}
+{# Classes réutilisées pour tous les champs #}
+{% set input_class = 'mt-1 w-full rounded-full bg-white px-5 py-2 text-slate-700 shadow-sm ring-1 ring-violet-200
+focus:outline-none focus:ring-2 focus:ring-violet-400' %}
+{% set label_class = 'text-sm font-semibold text-violet-700' %}
+{% set row_vars = {
+row_attr: {class: 'flex flex-col'},
+label_attr: {class: label_class},
+error_item_class: 'mt-1 text-sm text-rose-600'
+} %}
+
+<section class="card mx-auto max-w-md">
+    <h1 class="page-title mb-2 text-center">✨ Inscription</h1>
+    <p class="mb-6 text-center text-sm text-slate-500">Crée ton compte pour rejoindre MaBiblio</p>
+
+    {# Erreurs globales du formulaire #}
+    {% if not registrationForm.vars.valid and registrationForm.vars.errors|length %}
+    <div class="mb-4 rounded-2xl bg-rose-100 px-5 py-3 text-sm font-semibold text-rose-700 ring-1 ring-rose-300">
+        {{ form_errors(registrationForm) }}
+    </div>
+    {% endif %}
+
+    {{ form_start(registrationForm, {attr: {class: 'flex flex-col gap-5'}}) }}
+    <div class="grid gap-5 sm:grid-cols-2">
+        {{ form_row(registrationForm.firstname, row_vars|merge({
+        label: 'Prénom',
+        attr: {class: input_class, placeholder: 'Jean'}
+        })) }}
+        {{ form_row(registrationForm.lastname, row_vars|merge({
+        label: 'Nom',
+        attr: {class: input_class, placeholder: 'Dupont'}
+        })) }}
+    </div>
+
+    {{ form_row(registrationForm.email, row_vars|merge({
+    label: 'Email',
+    attr: {class: input_class, placeholder: 'jean.dupont@mail.com'}
+    })) }}
+
+    <div class="grid gap-5 sm:grid-flex-2">
+        {{ form_row(registrationForm.plainPassword.first, row_vars|merge({
+        label: 'Mot de passe',
+        attr: {class: input_class, placeholder: '6 caractères minimum', autocomplete: 'new-password'}
+        })) }}
+        {{ form_row(registrationForm.plainPassword.second, row_vars|merge({
+        label: 'Confirmer le mot de passe',
+        attr: {class: input_class, placeholder: 'Retape ton mot de passe', autocomplete: 'new-password'}
+        })) }}
+    </div>
+
+
+    {{ form_row(registrationForm.agreeTerms, row_vars|merge({
+    label: 'J’accepte les conditions d’utilisation',
+    row_attr: {class: 'flex flex-col'},
+    label_attr: {class: 'flex items-center gap-2 text-sm text-slate-600'},
+    attr: {class: 'h-4 w-4 accent-violet-500'}
+    })) }}
+
+    <button type="submit" class="btn w-full justify-center py-3 text-base">S’inscrire 🚀</button>
+    {{ form_end(registrationForm) }}
+</section>
+{% endblock %}

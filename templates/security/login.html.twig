@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block body %}
+    {% set input_class = 'mt-1 w-full rounded-full bg-white px-5 py-2 text-slate-700 shadow-sm ring-1 ring-violet-200 focus:outline-none focus:ring-2 focus:ring-violet-400' %}
+    {% set label_class = 'text-sm font-semibold text-violet-700' %}
+
+    <section class="card mx-auto max-w-md">
+        <h1 class="page-title mb-2 text-center">🔐 Connexion</h1>
+        <p class="mb-6 text-center text-sm text-slate-500">Content de te revoir sur MaBiblio !</p>
+
+        {% if error %}
+            <twig:Alert :message="error.messageKey|trans(error.messageData, 'security')" type="danger" />
+        {% endif %}
+
+        {% if app.user %}
+            <div class="mb-4 rounded-2xl bg-sky-100 px-5 py-3 text-sm text-sky-700 ring-1 ring-sky-300">
+                Tu es connecté en tant que <strong>{{ app.user.userIdentifier }}</strong> —
+                <a href="{{ logout_path() }}" class="font-semibold underline hover:text-sky-900">Se déconnecter</a>
+            </div>
+        {% endif %}
+
+        <form method="post" class="flex flex-col gap-5">
+            <div class="flex flex-col">
+                <label for="username" class="{{ label_class }}">Email</label>
+                <input type="email" value="{{ last_username }}" name="_username" id="username"
+                       class="{{ input_class }}" placeholder="jean.dupont@mail.com"
+                       autocomplete="email" required autofocus>
+            </div>
+
+            <div class="flex flex-col">
+                <label for="password" class="{{ label_class }}">Mot de passe</label>
+                <input type="password" name="_password" id="password"
+                       class="{{ input_class }}" placeholder="••••••••"
+                       autocomplete="current-password" required>
+            </div>
+
+            <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
+
+            {#
+                Décommenter et ajouter l'option remember_me au firewall pour activer « Se souvenir de moi ».
+                Voir https://symfony.com/doc/current/security/remember_me.html
+
+                <label for="_remember_me" class="flex items-center gap-2 text-sm text-slate-600">
+                    <input type="checkbox" name="_remember_me" id="_remember_me" class="h-4 w-4 accent-violet-500">
+                    Se souvenir de moi
+                </label>
+            #}
+
+            <button class="btn w-full justify-center py-3 text-base" type="submit">Se connecter 🚀</button>
+        </form>
+
+        <p class="mt-6 text-center text-sm text-slate-500">
+            Pas encore de compte ?
+            <a href="{{ path('app_register') }}" class="font-semibold text-violet-600 hover:underline">Inscris-toi</a>
+        </p>
+    </section>
+{% endblock %}

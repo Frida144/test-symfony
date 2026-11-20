@@ -22,6 +22,12 @@
     <body class="min-h-screen bg-linear-to-br from-pink-100 via-purple-100 to-sky-100 text-slate-700">
         <twig:Navbar/>
         <main class="mx-auto max-w-5xl px-4 py-10">
+            {# Messages flash ajoutés avec $this->addFlash('type', 'message') #}
+            {% for type, messages in app.flashes %}
+                {% for message in messages %}
+                    <twig:Alert :message="message" :type="type" />
+                {% endfor %}
+            {% endfor %}
             {% block body %}{% endblock %}
         </main>
         <twig:Footer/>

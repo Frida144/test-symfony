@@ -4,6 +4,9 @@ Liste des categories
 {% endblock %}
 {% block body %}
 <section>
+        <div class="mb-6 flex justify-end">
+            <a href="{{ path('app_category_new') }}" class="btn">➕ Ajouter une catégorie</a>
+        </div>
     {% if categories %}
     <h1 class="page-title">🏷️ Liste des categories</h1>
     <div class="flex flex-wrap gap-3">

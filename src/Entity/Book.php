@@ -6,6 +6,7 @@ use App\Repository\BookRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
 class Book
@@ -16,20 +17,23 @@ class Book
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank(message: 'Le titre est obligatoire.')]
+    #[Assert\Length(max: 100)]
     private ?string $title = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Le résumé est obligatoire.')]
+    #[Assert\Length(max: 255)]
     private ?string $resume = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: 'La date de publication est obligatoire.')]
     private ?\DateTimeImmutable $publishAt = null;
 
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank(message: 'L\'auteur est obligatoire.')]
+    #[Assert\Length(max: 100)]
     private ?string $author = null;
-
-    #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $user = null;
 
     /**
      * @var Collection<int, Category>
@@ -76,7 +80,8 @@ class Book
         return $this->publishAt;
     }
 
-    public function setPublishAt(\DateTimeImmutable $publishAt): static
+    // nullable : un champ date vide envoie null, c'est #[Assert\NotNull] qui affiche l'erreur
+    public function setPublishAt(?\DateTimeImmutable $publishAt): static
     {
         $this->publishAt = $publishAt;
 
@@ -91,18 +96,6 @@ class Book
     public function setAuthor(string $author): static
     {
         $this->author = $author;
-
-        return $this;
-    }
-
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): static
-    {
-        $this->user = $user;
 
         return $this;
     }

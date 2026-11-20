@@ -2,9 +2,13 @@
 
 namespace App\Controller;
 
+use App\Entity\Book;
+use App\Form\BookType;
 use App\Service\BookService;
 use App\Service\CategoryService;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
@@ -70,6 +74,28 @@ class BookController extends AbstractController
 
         return $this->render('book/index.html.twig', [
             'books' => $books,
+        ]);
+    }
+
+    #[Route(path: '/book/new', name: 'app_book_new', methods: ['GET', 'POST'])]
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $book = new Book();
+
+        $form = $this->createForm(BookType::class, $book);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($book);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Livre « ' . $book->getTitle() . ' » enregistré avec succès.');
+
+            return $this->redirectToRoute('app_book_show', ['id' => $book->getId()]);
+        }
+
+        return $this->render('book/book_new.html.twig', [
+            'form' => $form,
         ]);
     }
 }
