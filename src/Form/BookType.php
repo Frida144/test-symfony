@@ -17,7 +17,6 @@ class BookType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            // empty_data '' : un champ vide donne '' (et non null), c'est #[Assert\NotBlank] qui affiche l'erreur
             ->add('title', TextType::class, [
                 'label' => 'Titre',
                 'empty_data' => '',
@@ -32,15 +31,15 @@ class BookType extends AbstractType
             ])
             ->add('publishAt', DateType::class, [
                 'label' => 'Date de publication',
-                'widget' => 'single_text',            // un seul champ <input type="date">
-                'input' => 'datetime_immutable',      // l'entité attend un DateTimeImmutable
+                'widget' => 'single_text',           
+                'input' => 'datetime_immutable',      
             ])
             ->add('categories', EntityType::class, [
                 'label' => 'Catégories',
                 'class' => Category::class,
                 'choice_label' => 'name',
-                'multiple' => true,                   // relation ManyToMany : plusieurs choix
-                'expanded' => true,                   // affichées en cases à cocher
+                'multiple' => true,   
+                'expanded' => true,
                 'required' => false,
             ])
         ;

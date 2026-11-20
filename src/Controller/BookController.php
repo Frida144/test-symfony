@@ -77,27 +77,4 @@ class BookController extends AbstractController
             'books' => $books,
         ]);
     }
-
-    #[Route(path: '/book/new', name: 'app_book_new', methods: ['GET', 'POST'])]
-    #[IsGranted('ROLE_USER', message: 'Vous devez être connecté pour ajouter un livre.')]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $book = new Book();
-
-        $form = $this->createForm(BookType::class, $book);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($book);
-            $entityManager->flush();
-
-            $this->addFlash('success', 'Livre « ' . $book->getTitle() . ' » enregistré avec succès.');
-
-            return $this->redirectToRoute('app_book_show', ['id' => $book->getId()]);
-        }
-
-        return $this->render('book/book_new.html.twig', [
-            'form' => $form,
-        ]);
-    }
 }
