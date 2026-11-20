@@ -20,4 +20,8 @@ class CategoryService
     {
         return $this->categoryRepository->find($id);
     }
+    public function saveCategory(Category $category): void
+    {
+        $this->categoryRepository->save($category, true);
+    }
 }

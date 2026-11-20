@@ -42,7 +42,6 @@ class CategoryController extends AbstractController
     }
 
     #[Route(path:'/category/new', name:'app_category_new', methods:["GET", "POST"])]
-    #[IsGranted('ROLE_ADMIN', message: 'Vous devez être administrateur pour accéder à cette page.')]
     public function new(Request $request):Response 
     {
         $category = new Category();
@@ -63,6 +62,32 @@ class CategoryController extends AbstractController
 
         return $this->render('category/category_new.html.twig', [
             'form'=> $form
+        ]);
+    }
+
+    #[Route(path:'/category/{id}/edit', name:'app_category_edit' , methods:["GET", "POST"])]
+    public function edit(int $id, Request $request): Response
+    {
+        $category = $this->categoryService->getCategoryById($id);
+
+        if (!$category) {
+            throw $this->createNotFoundException('Catégorie non trouvée');
+        }
+
+        $form = $this->createForm('App\\Form\\CategoryType', $category);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->entityManager->persist($category);
+            $this->entityManager->flush();
+            $msg = 'Catégorie enregistrée avec succès.';
+
+            $this->addFlash('notice', $msg);
+
+            return $this->redirectToRoute('app_categories');
+        }
+        return $this->render('category/category_edit.html.twig', [
+            'form' => $form
         ]);
     }
 }

@@ -26,4 +26,13 @@ class CategoryType extends AbstractType
             'data_class' => Category::class,
         ]);
     }
+    public function editForm(FormBuilderInterface $builder, array $options): void
+    {
+        $builder
+            ->add('name', TextType::class, [
+                'label' => 'Nom de la catégorie',
+                'empty_data' => '',  
+            ])
+        ;
+    }
 }

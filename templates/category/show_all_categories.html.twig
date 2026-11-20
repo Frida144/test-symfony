@@ -13,6 +13,8 @@ Liste des categories
         {# boucler sur la liste des categories #}
         {% for category in categories %}
         <twig:CategoryCard id="{{ category.id }}" name="{{ category.name }}" />
+        <a href="{{ path('app_category_edit', { 'id': category.id }) }}" class="btn">✏️ Modifier</a>
+
         {% endfor %}
     </div>
     {% else %}
