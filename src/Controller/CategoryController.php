@@ -42,6 +42,7 @@ class CategoryController extends AbstractController
     }
 
     #[Route(path:'/category/new', name:'app_category_new', methods:["GET", "POST"])]
+    #[IsGranted('ROLE_ADMIN', message: 'Vous devez être administrateur pour accéder à cette page.')]
     public function new(Request $request):Response 
     {
         $category = new Category();

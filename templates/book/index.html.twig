@@ -7,7 +7,10 @@
         class="flex-1 rounded-full bg-white px-5 py-2 shadow ring-1 ring-violet-200 focus:outline-none focus:ring-2 focus:ring-violet-400">
     <button class="btn">Rechercher</button>
 </form>
-
+<div class="flex flex-wrap items-start justify-between gap-3">
+    <h1 class="page-title">📚 Liste des livres</h1>
+    <a href="{{ path('app_book_new') }}" class="btn">➕ Ajouter un livre</a>
+</div>
 {% set categories = categories|default([]) %}
 {% set selectedCategory = selectedCategory|default('') %}
 {% set selectedDate = selectedDate|default('') %}
