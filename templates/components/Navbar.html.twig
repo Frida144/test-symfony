@@ -1,13 +1,14 @@
 {% set current_route = app.request.attributes.get('_route') %}
 {% set links = [
-    {route: 'app_home', label: '🏠 Accueil'},
-    {route: 'app_books', label: '📚 Livres'},
-    {route: 'app_book_new', label: '➕ Ajouter un livre'},
-    {route: 'app_categories', label: '🏷️ Catégories'},
-    {route: 'app_category_new', label: '➕ Ajouter une catégorie'},
-    {route: 'app_contact', label: '✉️ Contact'},
-    {route: 'app_register', label: '🔑 Inscription'},
-    {route: 'app_login', label: '🔐 Connexion'},
+{route: 'app_home', label: '🏠 Accueil'},
+{route: 'app_books', label: '📚 Livres'},
+{route: 'app_book_new', label: '➕ Ajouter un livre', auth: true},
+{route: 'app_categories', label: '🏷️ Catégories'},
+{route: 'app_category_new', label: '➕ Ajouter une catégorie', auth: true},
+{route: 'app_contact', label: '✉️ Contact'},
+{route: 'app_register', label: '🔑 Inscription', auth: false},
+{route: 'app_login', label: '🔐 Connexion', auth: false},
+{route: 'app_logout', label: '🚪 Déconnexion', auth: true},
 ] %}
 
 <nav class="sticky top-0 z-10 bg-white/70 shadow-sm backdrop-blur">
@@ -15,12 +16,24 @@
         <a href="{{ path('app_home') }}" class="text-2xl font-extrabold text-violet-600">✨ MaBiblio</a>
         <ul class="flex flex-wrap gap-2">
             {% for link in links %}
-                <li>
-                    <a href="{{ path(link.route) }}"
-                       class="rounded-full px-4 py-2 text-sm font-semibold transition {{ current_route == link.route ? 'bg-linear-to-r from-pink-500 to-violet-500 text-white shadow' : 'text-violet-600 hover:bg-violet-100' }}">
-                        {{ link.label }}
-                    </a>
-                </li>
+            {% if link.auth is not defined %}
+            {% set show = true %}
+
+            {% elseif link.auth == true %}
+            {% set show = app.user is not null %}
+
+            {% else %}
+            {% set show = app.user is null %}
+            {% endif %}
+
+            {% if show %}
+            <li>
+                <a href="{{ path(link.route) }}"
+                    class="rounded-full px-4 py-2 text-sm font-semibold transition {{ current_route == link.route ? 'bg-linear-to-r from-pink-500 to-violet-500 text-white shadow' : 'text-violet-600 hover:bg-violet-100' }}">
+                    {{ link.label }}
+                </a>
+            </li>
+            {% endif %}
             {% endfor %}
         </ul>
     </div>

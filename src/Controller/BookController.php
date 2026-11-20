@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 class BookController extends AbstractController
 {
@@ -78,6 +79,7 @@ class BookController extends AbstractController
     }
 
     #[Route(path: '/book/new', name: 'app_book_new', methods: ['GET', 'POST'])]
+    #[IsGranted('ROLE_USER', message: 'Vous devez être connecté pour ajouter un livre.')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $book = new Book();
